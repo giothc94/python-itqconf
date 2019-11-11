@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}
+Blog | {{blog.title}}
+{% endblock title %}
+{% block content %}
+<section id="post-section">
+    <div class="row p-0 m-0">
+        <div class="col-md-12 p-0 m-0">
+            <div class="jumbotron jumbotron-fluid rounded p-0 pt-sm-3 pt-md-5 pb-sm-3 pb-md-5">
+                <div class="pl-sm-2 pl-md-5 pr-sm-2 pr-md-5 d-flex">
+                    <div class="container">
+                        <div id="jumbotron-post"
+                            class="d-sm-flex d-md-flex d-lg-flex flex-sm-column-reverse flex-md-row flex-lg-row align-items-sm-center">
+                            <div id="bar-style-post" class="bg-dark mr-3 mt-2 mb-2 rounded" style="width: .9em; height:20em"></div>
+                            <div class="d-flex flex-column align-items-center w-100">
+                                <div class="display-4 mb-4">{{blog.title}}</div>
+                                <div id="jumbotron-post-inf-speaker"
+                                    class="d-sm-flex d-md-flex d-lg-flex flex-sm-column flex-md-column flex-lg-row align-items-sm-center align-items-md-start align-items-lg-center mb-3 mt-3">
+                                    <img src={{ blog.speaker.picture.url }} alt="speaker-img"
+                                        class="rounded-circle border-success img-fluid ml-3 mr-3 d-md-none d-lg-block"
+                                        width="75" height="75">
+                                    <small class="d-sm-flex d-md-flex d-lg-flex">
+                                        <span class="text-dark">Escrito por: <a href="{% url 'speaker' blog.speaker.id  %}">@{{blog.speaker.user.username}}</a></span>
+                                        <span class="ml-2 mr-2">|</span>
+                                        <span class="text-dark">{{blog.created}}</span>
+                                    </small>
+                                </div>
+                            </div>
+                            <img src="{{blog.picture.url}}"
+                                alt="" class="m-3 img-fluid" width="50%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="text-right mb-5">
+                    <div class="h3">{{blog.subtitle}}</div>
+                </div>
+                <div class="text-justify">
+                    {{blog.content | safe}}
+                </div>
+            </div>
+        </div>
+        <a href={% url 'blogs' %}> < regresar</a> 
+    </div> 
+</section>
+{% endblock content %}

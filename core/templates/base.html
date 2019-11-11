@@ -1,0 +1,135 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href={% static '/vendor/bootstrap/css/bootstrap.min.css' %}>
+    <link rel="stylesheet" href={% static '/assets/style.css' %}>
+    <link rel="stylesheet" href={% static '/vendor/font-awesome/css/font-awesome.min.css' %}>
+    <script type="text/javascript" src={% static "ckeditor/ckeditor-init.js" %}></script>
+    <script type="text/javascript" src={% static "ckeditor/ckeditor/ckeditor.js" %}></script>
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-dark">
+        <!-- <div class="container"> -->
+        <a class="navbar-brand align-items-center" href={% url 'index' %}>
+            <img src={% static '/assets/js-conf.png' %} width="30px" height="30px" alt="log-conf">
+            <span class="font-weight-light">itq</span><span class="font-weight-bold">Conf</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                {% if request.user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href={% url 'update-user' request.user.id %}>Editar datos de usuario</a>
+                        <div class="dropdown-divider"></div>
+                        {% if request.speaker %}
+                        <a class="dropdown-item" href={% url 'update-speaker' request.speaker.id %}>Editar datos de speaker</a>
+                        {% endif %}
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href={% url 'logout' %}>Cerrar sesion</a>
+                    </div>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src={{request.speaker.picture.url}} alt="picture-speaker" class="rounded-circle"
+                            width="25px" height="25px">
+                        @{{request.user.username}}
+                    </a>
+                </li>
+                {% endif %}
+                {% if request.user.is_authenticated and not request.speaker.user.id %}
+                <li class="nav-item">
+                    <a class="nav-link btn btn-danger text-white" href="{% url 'create-speaker' %}">Completa tu registro</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}#main">La conferencia<span
+                            class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}#speakers">Speakers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}#location">Lugar y fecha</a>
+                </li>
+                {% if not request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}#convierte-speaker" tabindex="-1"
+                        aria-disabled="true">Convierte en
+                        speaker</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href={% url 'blogs' %}>Blog<span class="sr-only">(current)</span></a>
+                </li>
+                {% if not request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link btn btn-outline-warning" href={% url 'login' %}>Acceder<span
+                            class="sr-only">(current)</span></a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <!-- </div> -->
+    </nav>
+    {% block content %}
+    {% endblock content %}
+    <!--Footer-->
+    {% load footer_pages %}
+    {% get_page_footer_list as list %}
+    <footer id="footer" class="pb-4 pt-4 bg-dark">
+        <div class="container">
+            <div class="row justify-content-center">
+                {% for page in list %}
+                <div class="col-12 col-lg">
+                    <a class="text-light" href={% url 'page_footer' page.id %}>{{page.title}}</a>
+                </div>
+                {% endfor %}
+                <div class="col-12 col-lg">
+                    <a class="text-light" href={% url 'create-user' %}>Registro</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalCompra" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src={% static '/vendor/jquery/jquery.slim.min.js' %}></script>
+    <script src={% static '/vendor/bootstrap/js/bootstrap.min.js' %}></script>
+</body>
+
+</html>

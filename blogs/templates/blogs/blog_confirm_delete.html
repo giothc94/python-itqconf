@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+Blog | Create{{blog.title}}
+{% endblock title %}
+{% block content %}
+<section id="post-create-section">
+    <div class="container">
+        <div class="row mb-3 mt-3">
+            <div class="col-sm-12 col-md-6 col-lg-8 offset-md-3 offset-lg-2 text-right text-uppercase">
+                <small>Eliminar este</small>
+                <h2>Post</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-8 offset-md-3 offset-lg-2">
+            {% if request.user.id == blog.speaker.user.id and request.speaker %}
+                <form method="post">{% csrf_token %}
+                    <div class="alert alert-info">
+                        Estas seguro de eliminar el post "{{ blog.title }}"?
+                    </div>
+                    <ul>
+                        <li>
+                            <div>Autor: <span class="text-primary">{{blog.speaker.user.first_name}} {{blog.speaker.user.last_name}} - @{{blog.speaker.user.username}}</span></div>
+                        </li>
+                        <li>
+                            <div>Creado el: <span class="text-primary">{{blog.created}}</span></div>
+                        </li>
+                        <li>
+                            <div>Actualizado el: <span class="text-primary">{{blog.updated}}</span></div>
+                        </li>
+                    </ul>
+                    <div class="d-flex justify-content-end">
+                        <a href={% url 'blogs' %} class="btn btn-light mr-3">Cancelar</a>
+                        <input type="submit" class="btn btn-dark" value="Eliminar">
+                    </div>
+                </form>
+            {% else %}
+                <div class="row">
+                    <div class="offset-sm-0 offset-md-3 offset-lg-2 col-sm-12 col-md-6 col-lg-8">
+                        <div class="alert alert-danger">
+                            No estas autorizado para eliminar este post
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

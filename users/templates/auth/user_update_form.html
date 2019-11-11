@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}
+ITQConf | Registro 
+{{blog.title}}
+{% endblock title %}
+{% block content %}
+<section id="post-create-section">
+    <div class="container">
+        <div class="row mb-3 mt-3">
+            <div class="col-sm-12 col-md-6 col-lg-8 offset-md-3 offset-lg-2 text-right text-uppercase">
+                <small>Proceso de</small>
+                <h2>registro</h2>
+            </div>
+        </div>
+        {% if request.user.id == request.speaker.user.id and request.speaker.user.id == user.id %}
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-8 offset-md-3 offset-lg-2">
+                <form action="" enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form-group">
+                        <label for="">{{field.label}}</label>
+                        <div class="input-group">
+                            {{field}}
+                        </div>
+                        <small class="text-danger">
+                            {{field.errors}}
+                        </small>
+                    </div>
+                    {% endfor %}
+                    <div class="form-group d-flex justify-content-end">
+                        <a href={% url 'blogs' %} class="btn btn-light mr-2">Cancelar</a>
+                        <input type="submit" value="Crear" class="btn btn-dark">
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div class="row">
+            <div class="offset-sm-0 offset-md-3 offset-lg-2 col-sm-12 col-md-6 col-lg-8">
+                <div class="alert alert-danger">
+                    No estas autorizado
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock content %}

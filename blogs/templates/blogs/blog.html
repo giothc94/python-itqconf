@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+ITQConf | Blog
+{% endblock title %}
+{% block content %}
+<section id="posts" class="mt-4 mb-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="offset-md-2 col-md-6 text-right text-uppercase">
+                <small>Conoce acerca de</small>
+                <h2>tecnologias JavaScript</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-8 col-lg-8">
+                {% if not blog_list %}
+                <div class="text-info">No hay posts</div>
+                {% endif %}
+                {% for post in blog_list %}
+                {% if not request.user.id == post.speaker.user.id %}
+                <div id="post-card" class="d-flex bg-media align-items-center mb-3 p-2">
+                    <img src={{post.picture.url}} class="mr-sm-3 mr-md-3 mr-lg-3" width="20%" height="100" alt="...">
+                    <div class="w-100">
+                        <div class="h5">{{post.title}}</div>
+                        <div id="post-content">{{post.subtitle}}</div>
+                        <div id="post-detail">
+                            <small>
+                                <span class="text-secondary">Escrito por: <a
+                                        href="{% url 'speaker' post.speaker.id  %}"><span>@{{post.speaker.user.username}}</span></a></span>
+                                <span>|</span>
+                                <span class="text-secondary">{{post.created}}</span>
+                            </small>
+                        </div>
+                        <div>
+                            <a href={% url 'post-detail' post.id %} class="">Leer mas</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-sm-12 col-md-4">
+            {% if request.user.is_authenticated %}
+                <div class="card p-4 shadow mb-3">
+                    <div class="h3"><span class="font-weight-light">Tus</span> <span
+                            class="font-weight-bold">aportes</span></div>
+                    {% if request.user.is_authenticated and request.speaker %}
+                    <div class="d-flex justify-content-end">
+                        <a class="text-decoration-none" href={% url 'post-create' %}><i class="fa fa-plus text-dark"></i>  agregar post</a>
+                    </div>
+                    {% endif %}
+                    <hr>
+                    <ul class="list-unstyled">
+                    {% for post in blog_list %}
+                    {% if request.user.id == post.speaker.user.id %}
+                        <li class="media bg-media mb-3 rounded d-flex align-items-center">
+                            <img src={{post.picture.url}} class="mr-3 p-1 rounded-circle" alt="picture-" width="64" height="64">
+                            <div class="media-body">
+                                <h5 class="mt-0 mb-1">{{post.title}}</h5>
+                                <div class="d-flex flex-column">
+                                    <small>
+                                        <a href="{% url 'speaker' post.speaker.user.id  %}"><span>@{{post.speaker.user.username}}</span></a>
+                                    </small>
+                                    <small>
+                                        <span class="text-secondary">{{post.created}}</span>
+                                    </small>
+                                    <div class="d-flex">
+                                        <a href={% url 'post-detail' post.id %} class="">ver</a><span class="text-black-50">|</span>
+                                        <a href={% url 'post-update' post.id %} class="">editar</a><span class="text-black-50">|</span>
+                                        <a href={% url 'post-delete' post.id %} class="">eliminar</a><span class="text-black-50">|</span>
+                                    </div>
+                                </div>  
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+                <div class="card p-4 shadow">
+                    <div class="h3"><span class="font-weight-light">Documentacion</span> <span
+                            class="font-weight-bold">Oficial</span></div>
+                    <hr>
+                    <a href="https://github.com/giothc94" target="blank" class="mb-3">JS Documentation</a>
+                    <a href="https://github.com/giothc94" target="blank" class="mb-3">Ionic Documentation </a>
+                    <a href="https://github.com/giothc94" target="blank" class="mb-3">Angular Documentation</a>
+                    <a href="https://github.com/giothc94" target="blank" class="mb-3">ReactJS Documentation</a>
+                    <a href="https://github.com/giothc94" target="blank" class="mb-3">NodeJS Documentation</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

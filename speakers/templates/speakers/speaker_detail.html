@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}
+Speaker | {{speaker.user.username}}
+{% endblock title %}
+{% block content %}
+<!-- speakers section -->
+<section id="speakers" class="mt-4 mb-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="offset-sm-0 offset-md-1 offset-lg-1 col-sm-12 col-md-10 col-lg-10 text-right text-uppercase">
+                <small>Conoce los</small>
+                <h2>Speakers</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-sm-0 offset-md-1 offset-lg-1 col-sm-12 col-md-10 col-lg-10">
+                <div id="card-speaker"
+                    class="d-sm-flex d-md-flex d-lg-flex d-xl-flex flex-sm-column-reverse flex-md-column-reverse flex-lg-row bg-light align-items-center justify-content-between rounded shadow mb-3 p-sm-3 p-md-3 p-lg-5">
+                    <div>
+                        <div class="d-flex flex-column justify-content-end">
+                            <span class="h1 p-0 m-0">
+                                {{speaker.user.first_name}} {{speaker.user.last_name}}
+                            </span>
+                            <small class="h6 text-secondary pl-2">{{speaker.job_title}}</small>
+                            <small class="h6 mb-5 text-info pl-2">@{{speaker.user.username}}</small>
+                        </div>
+                        <div class="mb-2">
+                            {% for stack in speaker.development_stack_as_list %}
+                                <span class="badge badge-warning">{{stack|upper}}</span>
+                            {% endfor %}
+                        </div>
+                        <div>{{speaker.biography | safe}}</div>
+                        <div id="social_media" class="mt-5 d-flex justify-content-center">
+                        {% if speaker.facebook_url %}
+                            <a href={{speaker.facebook_url}} class="text-decoration-none text-dark"
+                                target="blank">
+                                <span class="fa-stack fa-lg mr-2">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        {% endif %}
+                        {% if speaker.twitter_url %}
+                            <a href={{speaker.twitter_url}} class="text-decoration-none text-dark"
+                                target="blank">
+                                <span class="fa-stack fa-lg mr-2">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        {% endif %}
+                        {% if speaker.instagram_url %}
+                            <a href={{speaker.instagram_url}} class="text-decoration-none text-dark"
+                                target="blank">
+                                <span class="fa-stack fa-lg mr-2">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        {% endif %}
+                        {% if speaker.github_url %}
+                            <a href={{speaker.github_url}} class="text-decoration-none text-dark"
+                                target="blank">
+                                <span class="fa-stack fa-lg mr-2">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        {% endif %}
+                        </div>
+                    </div>
+                    <img src={{speaker.picture.url}} class="img-fluid rounded-circle m-3" width="300" height="300"
+                        alt="{{speaker.username}}-picture">
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'index' %}#speakers"> < regresar </a> 
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block title %}
+    {{page.title}}
+{% endblock title %}
+{% block content %}
+<section id="footers" class="mt-4 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-md-8">
+                <div class="mt-5 d-flex bg-light align-items-center justify-content-between rounded shadow mb-3 p-5">
+                    <div>
+                        <div class="d-flex flex-column justify-content-end">
+                            <span class="h1 p-0 m-0">
+                                {{page.title}}
+                            </span>
+                            <small class="h6 mb-5 text-secondary pl-2">
+                                Instituto Tecnologico Quito 
+                                {% if request.user.is_superuser %}
+                                    <a href={% url 'page_footer_update' page.id %}>
+                                        <span class="text-info ml-3">Editar|</span> 
+                                    </a>
+                                    <a href={% url 'page_footer_delete' page.id %}>
+                                        <span class="text-info">Eliminar|</span> 
+                                    </a>
+                                {% endif %}
+                            </small>
+                        </div>
+                        <div>{{page.content | safe}}</div>
+                        <div id="social_media" class="mt-5 d-flex justify-content-center">
+                            <a href="{{SOCIAL.URL_FACEBOOK}}" class="text-decoration-none text-dark"
+                                target="blank">
+                                <span class="fa-stack fa-lg mr-2">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                            <a href="{{SOCIAL.URL_INSTAGRAM}}" class="text-decoration-none text-dark"
+                                target="blank">
+                                <span class="fa-stack fa-lg mr-2">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                            <a href="{{SOCIAL.URL_GITHUB}}" class="text-decoration-none text-dark"
+                                target="blank">
+                                <span class="fa-stack fa-lg mr-2">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

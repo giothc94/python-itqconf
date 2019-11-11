@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+{{page.title}}
+{% endblock title %}
+{% block content %}
+<section id="footers" class="mt-4 mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-md-8">
+                <div class="mt-5 d-flex bg-light align-items-center justify-content-between rounded shadow mb-3 p-5">
+                    <div>
+                        <form action="" method="POST">
+                            <form method="post">{% csrf_token %}
+                                <p>Are you sure you want to delete "{{ object }}"?</p>
+                                <input type="submit" value="Confirm">
+                            </form>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
